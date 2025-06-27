@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Zonas Turísticas</title>
+  </head>
+  <body>
+    <h1>Zonas Turísticas de la Estación</h1>
+    <div th:if="${zonas.isEmpty()}">
+      <p>No hay zonas registradas para esta estación.</p>
+    </div>
+    <ul th:if="${!zonas.isEmpty()}">
+      <li th:each="zona : ${zonas}">
+        <strong th:text="${zona.nombre}"></strong><br />
+        Dirección: <span th:text="${zona.direccion}"></span><br />
+        Caminata: <span th:text="${zona.duracionCaminataMin}"></span> min<br />
+        Servicios: <span th:text="${zona.servicios}"></span>
+        <hr />
+      </li>
+    </ul>
+    <a th:href="@{/estaciones}">Volver</a>
+  </body>
+</html>
