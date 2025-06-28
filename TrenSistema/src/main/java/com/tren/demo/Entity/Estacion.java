@@ -19,7 +19,7 @@ public class Estacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_estacion")
     private int id_estacion;
-    @Column(name = "nombre_estacion", length = 10)
+    @Column(name = "nombre_estacion", length = 30)
     private String nombre_estacion;
 
     @Column(name = "numero_orden_estacion")
