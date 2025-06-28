@@ -23,7 +23,7 @@ public class TrenSimulador {
     }
 
     public synchronized String getDireccion() {
-        return haciaAdelante ? "ESTA DE IDA" : "ESTA DE VUELTA";
+        return haciaAdelante ? "IDA" : "VUELTA";
     }
 
     public synchronized int getPosicionActual() {

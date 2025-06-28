@@ -16,9 +16,9 @@ public class TrenScheduler {
         new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                     int nuevaPosicion = tren.avanzar();
-                    System.out.println("Tren llegó a estación " + nuevaPosicion);
+                    // System.out.println("Tren llegó a estación " + nuevaPosicion);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

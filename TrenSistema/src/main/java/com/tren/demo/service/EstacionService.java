@@ -12,6 +12,9 @@ public interface EstacionService {
 
     public abstract Estacion buscarPorOrden(int numero_orden_estacion);
 
-    public int calcularTiempo(int origen, int destino);
+    public int calcularTiempoLlegada(int posicionTren, int estacionObjetivo, boolean haciaAdelante);
+
+    public int calcularTiempoViaje(int estacionOrigen, int estacionDestino, boolean direccionInicialTren,
+            int posicionTren);
 
 }

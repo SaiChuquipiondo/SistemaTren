@@ -29,26 +29,37 @@ public class ViajeController {
 
     @GetMapping("/calcular-tiempo-real")
     public String calcularTiempoReal(@RequestParam int estacionOrigen,
-            @RequestParam int estacionDestino,@RequestParam int idZona,
+            @RequestParam int estacionDestino, @RequestParam int idZona,
             Model model) {
 
         int posicionTren = trenSimulador.getPosicionActual();
+        boolean haciaAdelante = trenSimulador.getDireccion().equalsIgnoreCase("IDA");
 
-        int tiempoLlegada = estacionService.calcularTiempo(posicionTren, estacionOrigen);
-        int tiempoViaje = estacionService.calcularTiempo(estacionOrigen, estacionDestino);
+        int tiempoLlegada = estacionService.calcularTiempoLlegada(posicionTren, estacionOrigen, haciaAdelante);
+        int tiempoViaje = estacionService.calcularTiempoViaje(estacionOrigen, estacionDestino, haciaAdelante,
+                posicionTren);
+
+        System.out.println("Tiempo de llegada: " + tiempoLlegada + " segundos.");
+        System.out.println("Tiempo de viaje: " + tiempoViaje + " segundos.");
+        System.out.println(haciaAdelante ? "IDA" : "VUELTA");
+        System.out.println("Posicion del tren: " + posicionTren);
 
         Estacion estacionActualTren = estacionService.buscarPorOrden(posicionTren);
         Estacion origen = estacionService.buscarPorOrden(estacionOrigen);
         Estacion destino = estacionService.buscarPorOrden(estacionDestino);
+
         ZonaTuristica zonaTuristica = zonaTurisService.buscarPoridZona(idZona);
 
         model.addAttribute("posicionTren", estacionActualTren);
         model.addAttribute("origen", origen);
         model.addAttribute("destino", destino);
-        model.addAttribute("zonaTuristica", zonaTuristica);
         model.addAttribute("tiempoLlegada", tiempoLlegada);
         model.addAttribute("tiempoViaje", tiempoViaje);
-
+        model.addAttribute("direccion", trenSimulador.getDireccion());
+        model.addAttribute("posicionTrenOrden", posicionTren);
+        model.addAttribute("origenOrden", estacionOrigen);
+        model.addAttribute("destinoOrden", estacionDestino);
+        model.addAttribute("zonaTuristica", zonaTuristica);
 
         return "tiempo-real";
     }

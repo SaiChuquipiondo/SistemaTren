@@ -32,6 +32,7 @@ public class TrenRestController {
 
         Map<String, String> data = new HashMap<>();
         data.put("estacion", nombre);
+        data.put("numero", String.valueOf(pos));
         data.put("direccion", direccion);
         return data;
     }
