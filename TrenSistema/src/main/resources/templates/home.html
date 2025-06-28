@@ -5,18 +5,15 @@
     <title>Vista General del Sistema</title>
   </head>
   <body>
-    <h1>🚉 Sistema de Zonas Turísticas - MTC</h1>
+    <h1>Sistema de Zonas Turísticas - MTC</h1>
 
-    <h2>📍 Estación Actual del Tren:</h2>
-    <p
-      th:if="${posicionTren != null}"
-      th:text="${posicionTren.nombre_estacion}"
-    ></p>
-    <p th:if="${posicionTren == null}">[Sin información de estación actual]</p>
+    <h2>Estación Actual del Tren:</h2>
+    <p id="posicion-tren">Cargando estación...</p>
+    <p id="direccion-tren">Cargando dirección...</p>
 
-    <h2>📋 Estaciones y Zonas Turísticas:</h2>
+    <h2>Estaciones y Zonas Turísticas:</h2>
     <div th:each="estacion : ${estaciones}">
-      <h3 th:text="${est.nombre_estacion}"></h3>
+      <h3 th:text="${estacion.nombre_estacion}"></h3>
       <!--
       <ul>
         <li th:each="zona : ${est.zonas}">
@@ -28,8 +25,8 @@
       -->
     </div>
 
-    <h2>🎫 Comprar Boleto:</h2>
-    <form action="/viaje/calcular-tiempo-real" method="get">
+    <h2>Comprar Boleto:</h2>
+    <form th:action="@{/viaje/calcular-tiempo-real}" method="get">
       <label for="estacionOrigen">Tu estación actual:</label>
       <select name="estacionOrigen">
         <option
@@ -51,4 +48,22 @@
       <button type="submit">Iniciar Viaje</button>
     </form>
   </body>
+
+  <script>
+    function actualizarEstadoTren() {
+      fetch("/api/tren/estado")
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("posicion-tren").textContent = data.estacion;
+          document.getElementById("direccion-tren").textContent =
+            data.direccion;
+        })
+        .catch((error) => {
+          console.error("Error al obtener estado del tren:", error);
+        });
+    }
+
+    setInterval(actualizarEstadoTren, 5000);
+    actualizarEstadoTren();
+  </script>
 </html>

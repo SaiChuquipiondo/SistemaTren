@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TrenSimulador {
-    private int posicionActual = new Random().nextInt(14) + 1;
+    private int posicionActual = new Random().nextInt(14);
     private boolean haciaAdelante = true;
 
     public synchronized int avanzar() {
@@ -20,6 +20,10 @@ public class TrenSimulador {
                 haciaAdelante = true;
         }
         return posicionActual;
+    }
+
+    public synchronized String getDireccion() {
+        return haciaAdelante ? "ESTA DE IDA" : "ESTA DE VUELTA";
     }
 
     public synchronized int getPosicionActual() {

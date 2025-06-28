@@ -42,16 +42,16 @@
     <h1>Simulación de Viaje en Tiempo Real</h1>
 
     <p>
-      🚆 Estación actual del tren:
+      Estación actual del tren:
       <strong th:text="${posicionTren.nombre}"></strong>
     </p>
-    <p>📍 Tu estación: <strong th:text="${origen.nombre}"></strong></p>
-    <p>🎯 Destino: <strong th:text="${destino.nombre}"></strong></p>
+    <p>Tu estación: <strong th:text="${origen.nombre}"></strong></p>
+    <p>Destino: <strong th:text="${destino.nombre}"></strong></p>
 
-    <h3>⏳ Tiempo estimado para que el tren llegue a ti:</h3>
+    <h3>Tiempo estimado para que el tren llegue a ti:</h3>
     <div id="llegada"></div>
 
-    <h3>🚆 Tiempo estimado desde tu estación hasta el destino:</h3>
+    <h3>Tiempo estimado desde tu estación hasta el destino:</h3>
     <div id="viaje"></div>
 
     <!-- Valores ocultos para JS -->
@@ -63,6 +63,6 @@
     <input type="hidden" id="tiempoViajeSegundos" th:value="${tiempoViaje}" />
 
     <br />
-    <!--<a href="/estaciones">🔙 Volver a estaciones</a>-->
+    <!--<a href="/estaciones">Volver a estaciones</a>-->
   </body>
 </html>
