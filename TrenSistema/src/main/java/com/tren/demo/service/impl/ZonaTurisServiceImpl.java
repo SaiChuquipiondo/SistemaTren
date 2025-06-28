@@ -22,4 +22,9 @@ public class ZonaTurisServiceImpl implements ZonaTurisService {
         return zonaRepo.findByEstacionId(estacionId);
     }
 
+    @Override
+    public ZonaTuristica buscarPoridZona(int id) {
+        return zonaRepo.findById(id).orElse(null);
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.tren.demo.controller;
 
+import com.tren.demo.Entity.ZonaTuristica;
+import com.tren.demo.service.ZonaTurisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -22,9 +24,12 @@ public class ViajeController {
     @Autowired
     private TrenSimulador trenSimulador;
 
+    @Autowired
+    private ZonaTurisService zonaTurisService;
+
     @GetMapping("/calcular-tiempo-real")
     public String calcularTiempoReal(@RequestParam int estacionOrigen,
-            @RequestParam int estacionDestino,
+            @RequestParam int estacionDestino,@RequestParam int idZona,
             Model model) {
 
         int posicionTren = trenSimulador.getPosicionActual();
@@ -35,12 +40,15 @@ public class ViajeController {
         Estacion estacionActualTren = estacionService.buscarPorOrden(posicionTren);
         Estacion origen = estacionService.buscarPorOrden(estacionOrigen);
         Estacion destino = estacionService.buscarPorOrden(estacionDestino);
+        ZonaTuristica zonaTuristica = zonaTurisService.buscarPoridZona(idZona);
 
         model.addAttribute("posicionTren", estacionActualTren);
         model.addAttribute("origen", origen);
         model.addAttribute("destino", destino);
+        model.addAttribute("zonaTuristica", zonaTuristica);
         model.addAttribute("tiempoLlegada", tiempoLlegada);
         model.addAttribute("tiempoViaje", tiempoViaje);
+
 
         return "tiempo-real";
     }

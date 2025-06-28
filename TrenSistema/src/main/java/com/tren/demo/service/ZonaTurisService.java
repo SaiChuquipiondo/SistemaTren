@@ -7,4 +7,5 @@ import com.tren.demo.Entity.ZonaTuristica;
 public interface ZonaTurisService {
 
     public abstract List<ZonaTuristica> buscarPorEstacion(int estacionId);
+    public abstract ZonaTuristica buscarPoridZona(int id);
 }
