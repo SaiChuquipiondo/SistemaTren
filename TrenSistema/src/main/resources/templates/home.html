@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vista General del Sistema</title>
+  </head>
+  <body>
+    <h1>Sistema de Zonas Turísticas - MTC</h1>
+
+    <h2>Estación Actual del Tren:</h2>
+    <p id="posicion-tren">Cargando estación...</p>
+    <p id="direccion-tren">Cargando dirección...</p>
+
+    <h2>Estaciones y Zonas Turísticas:</h2>
+    <div th:each="estacion : ${estaciones}">
+      <h3 th:text="${estacion.nombre_estacion}"></h3>
+      <!--
+      <ul>
+        <li th:each="zona : ${est.zonas}">
+          <strong th:text="${zona.nombre_z}"></strong>:
+          <span th:text="${zona.direccion}"></span> -
+          <span th:text="${zona.duracionCaminataMin}"></span> min de caminata
+        </li>
+      </ul>
+      -->
+    </div>
+
+    <h2>Comprar Boleto:</h2>
+    <form th:action="@{/viaje/calcular-tiempo-real}" method="get">
+      <label for="estacionOrigen">Tu estación actual:</label>
+      <select name="estacionOrigen">
+        <option
+          th:each="estacion : ${estaciones}"
+          th:value="${estacion.ordenEstacion}"
+          th:text="${estacion.nombre_estacion}"
+        ></option>
+      </select>
+      <br /><br />
+      <label for="estacionDestino">Estación destino:</label>
+      <select name="estacionDestino">
+        <option
+          th:each="estacion : ${estaciones}"
+          th:value="${estacion.ordenEstacion}"
+          th:text="${estacion.nombre_estacion}"
+        ></option>
+      </select>
+      <br /><br />
+      <button type="submit">Iniciar Viaje</button>
+    </form>
+  </body>
+
+  <script>
+    function actualizarEstadoTren() {
+      fetch("/api/tren/estado")
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("posicion-tren").textContent = data.estacion;
+          document.getElementById("direccion-tren").textContent =
+            data.direccion;
+        })
+        .catch((error) => {
+          console.error("Error al obtener estado del tren:", error);
+        });
+    }
+
+    setInterval(actualizarEstadoTren, 5000);
+    actualizarEstadoTren();
+  </script>
+</html>

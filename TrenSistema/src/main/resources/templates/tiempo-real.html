@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Viaje en Tiempo Real</title>
+    <script>
+      function iniciarCuentaRegresiva(segundos, idElemento, mensajeFinal) {
+        const elem = document.getElementById(idElemento);
+        const interval = setInterval(() => {
+          let min = Math.floor(segundos / 60);
+          let seg = segundos % 60;
+          elem.textContent = `${min} min ${seg} seg`;
+          segundos--;
+
+          if (segundos < 0) {
+            clearInterval(interval);
+            elem.textContent = mensajeFinal;
+          }
+        }, 1000);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const llegada = parseInt(
+          document.getElementById("tiempoLlegadaSegundos").value
+        );
+        const viaje = parseInt(
+          document.getElementById("tiempoViajeSegundos").value
+        );
+
+        iniciarCuentaRegresiva(
+          llegada,
+          "llegada",
+          "¡El tren llegó a tu estación!"
+        );
+        setTimeout(() => {
+          iniciarCuentaRegresiva(viaje, "viaje", "¡Llegaste a tu destino!");
+        }, (llegada + 1) * 1000);
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Simulación de Viaje en Tiempo Real</h1>
+
+    <p>
+      Estación actual del tren:
+      <strong th:text="${posicionTren.nombre_estacion}"></strong>
+    </p>
+    <p>Tu estación: <strong th:text="${origen.nombre_estacion}"></strong></p>
+    <p>Destino: <strong th:text="${destino.nombre_estacion}"></strong></p>
+
+    <h3>Tiempo estimado para que el tren llegue a ti:</h3>
+    <div id="llegada"></div>
+
+    <h3>Tiempo estimado desde tu estación hasta el destino:</h3>
+    <div id="viaje"></div>
+
+    <!-- Valores ocultos para JS -->
+    <input
+      type="hidden"
+      id="tiempoLlegadaSegundos"
+      th:value="${tiempoLlegada}"
+    />
+    <input type="hidden" id="tiempoViajeSegundos" th:value="${tiempoViaje}" />
+
+    <br />
+    <!--<a href="/estaciones">Volver a estaciones</a>-->
+  </body>
+</html>
