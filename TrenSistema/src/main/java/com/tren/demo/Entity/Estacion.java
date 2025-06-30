@@ -12,20 +12,50 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+
 public class Estacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_estacion")
+    @Column(name = "Estid")
     private int id_estacion;
-    @Column(name = "nombre_estacion", length = 30)
+    @Column(name = "Estnombre", length = 30)
     private String nombre_estacion;
 
-    @Column(name = "numero_orden_estacion")
+    @Column(name = "Estnumero")
     private int ordenEstacion;
 
     @OneToMany(mappedBy = "estacion")
     private List<ZonaTuristica> zonas;
 
+    public int getId_estacion() {
+        return id_estacion;
+    }
+
+    public void setId_estacion(int id_estacion) {
+        this.id_estacion = id_estacion;
+    }
+
+    public String getNombre_estacion() {
+        return nombre_estacion;
+    }
+
+    public void setNombre_estacion(String nombre_estacion) {
+        this.nombre_estacion = nombre_estacion;
+    }
+
+    public int getOrdenEstacion() {
+        return ordenEstacion;
+    }
+
+    public void setOrdenEstacion(int ordenEstacion) {
+        this.ordenEstacion = ordenEstacion;
+    }
+
+    public List<ZonaTuristica> getZonas() {
+        return zonas;
+    }
+
+    public void setZonas(List<ZonaTuristica> zonas) {
+        this.zonas = zonas;
+    }
 }

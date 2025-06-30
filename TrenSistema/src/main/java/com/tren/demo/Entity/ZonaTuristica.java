@@ -16,22 +16,24 @@ import lombok.Setter;
 public class ZonaTuristica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_zona")
+    @Column(name = "Zntid")
     private int id;
 
-    @Column(name = "nombre_zona", length = 50)
+    @Column(name = "Zntnombre", length = 50)
     private String nombre;
 
-    @Column(name = "direccion_zona", length = 100)
+    @Column(name = "Zntdireccion", length = 100)
     private String direccion;
 
-    @Column(name = "duracion_caminata_zona")
+    @Column(name = "Zntdescripcion")
     private int duracionCaminata;
 
-    @Column(name = "servicios_zona", length = 100)
+    @Column(name = "Znttiempocaminata", length = 100)
     private String servicios;
 
     @ManyToOne
-    @JoinColumn(name = "id_estacion")
+    @JoinColumn(name = "Estid")
     private Estacion estacion;
+
+
 }
