@@ -1,0 +1,46 @@
+      <div class="d-flex flex-column flex-md-row align-items-start justify-content-between mb-4">
+        <h1 class="me-3">Sistema de Zonas Turísticas - MTC</h1>
+
+
+       <div class="row g-4">
+          <div class="col-lg-9">
+              <h2 class="mb-3">Catálogo de Estaciones</h2>
+              <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+                <div class="col" th:each="estacion,iterStat : ${estaciones}">
+                  <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                      <strong th:text="'Estación ' + (iterStat.index + 1) + ': ' + ${estacion.nombre_estacion}">
+                        Estación X
+                      </strong>
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+                        <h6>Zonas Turísticas</h6>
+                        <ul class="list-unstyled mb-3 small">
+                          <li th:each="zona : ${estacion.zonas}">
+                            • <span th:text="${zona.nombre}">Zona A</span>
+                          </li>
+                         </ul>
+
+                         <!-- Clima -->
+                         <div class="mt-auto text-center card-clima">
+                    <div
+                      id="icon-[[${estacion.id_estacion}]]"
+                      class="icono-clima mb-1"
+                    >🌤️</div>
+                    <div id="temp-[[${estacion.id_estacion}]]">-- °C</div>
+                    <div
+                      id="cond-[[${estacion.id_estacion}]]"
+                      class="text-capitalize text-muted"
+                    >condición</div>
+                  </div>
+                </div>
+                  <div class="card-footer text-end">
+                  <small class="text-muted">Actualiza cada 10 s</small>
+                </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+       </div> 

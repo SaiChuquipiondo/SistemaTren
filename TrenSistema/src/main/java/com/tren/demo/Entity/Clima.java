@@ -1,5 +1,8 @@
 package com.tren.demo.Entity;
 
+
+
+//@Transient
 public class Clima {
 
     private int temperatura;

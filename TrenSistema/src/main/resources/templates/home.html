@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
   <head>
     <meta charset="UTF-8" />
     <title>Vista General del Sistema</title>
@@ -9,6 +9,13 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     />
     <style>
+      .icono-clima {
+        font-size: 2rem;
+        line-height: 1;
+      }
+      .card-clima {
+        font-size: 0.9rem;
+      }
       #info-tren {
         background-color: #e0e0e0;
         border-radius: 8px;
@@ -39,6 +46,7 @@
               <td th:text="${estacion.nombre_estacion}">Nombre</td>
               <td></td>
               <td th:id="'clima-estacion-' + ${estacion.id_estacion}">nombresclima</td>
+
             </tr>
           </tbody>
         </table>

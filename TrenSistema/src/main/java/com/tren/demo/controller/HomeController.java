@@ -23,9 +23,6 @@ public class HomeController {
     @Autowired
     private TrenSimulador trenSimulador;
   
-   /* @Autowired
-    private ZonaTurisService zonaTuristicaService;*/ 
-    
 
     @GetMapping("/")
     public String vistaGeneral(Model model) {
@@ -39,7 +36,5 @@ public class HomeController {
         model.addAttribute("estacion", estacionActualTren);
         return "home";
     }
-
-
 
 }

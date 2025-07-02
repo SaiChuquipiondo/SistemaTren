@@ -24,12 +24,6 @@ public class Estacion {
     @Column(name = "Estnumero")
     private int ordenEstacion;
 
-    @Column(name = "Estlatitud", nullable = false)
-    private double latitud;
-
-    @Column(name = "Estlongitud", nullable = false)
-    private double longitud;
-
     @OneToMany(mappedBy = "estacion")
     private List<ZonaTuristica> zonas;
 
@@ -47,22 +41,6 @@ public class Estacion {
     
     public void setNombre_estacion(String nombre_estacion) {
         this.nombre_estacion = nombre_estacion;
-    }
-
-    public double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
-    }
-
-    public double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(double longitud) {
-        this.longitud = longitud;
     }
 
     public int getOrdenEstacion() {
