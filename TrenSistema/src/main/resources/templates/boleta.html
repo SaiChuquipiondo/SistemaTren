@@ -38,7 +38,18 @@
               <td th:text="${iterStat.index + 1}">1</td>
               <td th:text="${estacion.nombre_estacion}">Nombre</td>
               <td></td>
-              <td th:id="'clima-estacion-' + ${estacion.id_estacion}">nombresclima</td>
+              <td>
+                <!-- Clima extraído del mapa climaPorEstacion -->
+                <img
+                    th:src="@{'http://openweathermap.org/img/wn/' 
+                     + ${climaPorEstacion[estacion.id_estacion].icono} + '@2x.png'}"
+                    width="32" height="32" alt="icono"/>
+                  <div th:text="${climaPorEstacion[estacion.id_estacion].temperatura} + ' °C'">-- °C</div>
+                  <div style="font-size:0.8em; color:gray;"
+                       th:text="'Min: ' + ${climaPorEstacion[estacion.id_estacion].minima} 
+                      + ' / Max: ' + ${climaPorEstacion[estacion.id_estacion].maxima}">Min: -- / Max: --</div>
+                  <div style="font-size:0.8em;" th:text="${climaPorEstacion[estacion.id_estacion].condicion}">condición</div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -164,11 +175,7 @@
           <h4>📍 Posición Actual del Tren</h4>
           <p>
             <strong>El tren esta en la estación:</strong>
-            <span id="posicion1-tren">Cargando...</span>
-          </p>
-          <p>
-            <strong>El tren se dirige a la estacion:</strong>
-            <span id="posicion2-tren">Cargando...</span>
+            <span id="posicion-tren">Cargando...</span>
           </p>
           <p>
             <strong>El tren esta de:</strong>
@@ -187,13 +194,10 @@
         fetch("/api/tren/estado")
           .then((res) => res.json())
           .then((data) => {
-            document.getElementById("posicion1-tren").textContent =
-              data.estacion1;
-            document.getElementById("posicion2-tren").textContent=
-              data.estacion2;
+            document.getElementById("posicion-tren").textContent =
+              data.estacion;
             document.getElementById("direccion-tren").textContent =
               data.direccion;
-            
           })
           .catch((err) =>
             console.error("Error al obtener estado del tren:", err)
@@ -203,7 +207,6 @@
       setInterval(actualizarEstadoTren, 1000);
       actualizarEstadoTren();
     </script>
-
 
     <!-- Mostrar zonas al elegir estación destino -->
     <script>
@@ -221,50 +224,5 @@
         });
       });
     </script>
-
-  <script>
-
-  function obtenerIconoClima(descripcion) {
-    switch (descripcion.toLowerCase()) {
-      case 'soleado': return '☀️';
-      case 'nublado': return '⛅';
-      case 'lluvia': return '🌧️';
-      case 'tormenta': return '🌩️';
-      case 'viento': return '💨';
-      case 'nevado': return '❄️';
-      default: return '🌤️';
-    }
-  }
-
-  async function actualizarClimas() {
-  try {
-    const response = await fetch('/api/tren/clima');
-    const data = await response.json();
-
-    for (const estacionId in data) {
-      const clima = data[estacionId];
-      const celda = document.getElementById(`clima-estacion-${estacionId}`);
-
-      if (celda) {
-        const icono = obtenerIconoClima(clima.descripcion);
-        celda.textContent = `${icono} ${clima.temperatura}°C - ${clima.descripcion}`;
-      } else {
-        console.warn(`No encontré celda con ID: clima-estacion-${estacionId}`);
-      }
-    }
-  } catch (error) {
-    console.error("Error actualizando clima:", error);
-  }
-}
-
-  // Ejecutar al cargar y luego cada 10 segundos
-  window.onload = () => {
-    actualizarClimas();
-    setInterval(actualizarClimas, 10000);
-  };
-</script>
-
-
-
   </body>
 </html>

@@ -1,5 +1,7 @@
 package com.tren.demo.Entity;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +12,7 @@ public class TrenScheduler {
 
     @Autowired
     private TrenSimulador tren;
+
 
     @PostConstruct
     public void iniciarSimulacion() {
@@ -25,4 +28,26 @@ public class TrenScheduler {
             }
         }).start();
     }
+
+    @PostConstruct
+    public void iniciarSimulacionClima() {
+    new Thread(() -> {
+        while (true) {
+            try {
+                Thread.sleep(10000); // cada 10 segundos
+                tren.generarClimaParaEstacionesMap(); // <-- ESTA ES LA BUENA
+
+                System.out.println("======= CLIMA ACTUALIZADO =======");
+                tren.getClimaActualPorEstacion().forEach((idEstacion, clima) -> {
+                    System.out.println("Estación " + idEstacion + ": " + clima);
+                });
+                System.out.println("=================================");
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }).start();
+}
+
 }
